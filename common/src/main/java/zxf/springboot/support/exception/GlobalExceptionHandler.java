@@ -5,23 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import zxf.springboot.support.rest.ServerResponse;
 
 @Slf4j
 @ControllerAdvice("zxf.springboot")
 public class GlobalExceptionHandler {
     @Autowired
-    private ErrorCode unexpectedErrorCode;
+    private BusinessError unexpectedErrorCode;
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException businessException) {
+    public ResponseEntity<ServerResponse> handleBusinessException(BusinessException businessException) {
         log.error("Business exception", businessException);
-        ErrorCode errorCode = businessException.getErrorCode();
-        return new ResponseEntity<>(ErrorResponse.of(errorCode.getCode(), errorCode.getDescription()),
-                errorCode.getHttpStatus());
+        BusinessError errorCode = businessException.getErrorCode();
+        return ResponseEntity.ok(ServerResponse.error(errorCode.copy()));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleUnexpectedException(Exception unexpectedException) {
+    public ResponseEntity<ServerResponse> handleUnexpectedException(Exception unexpectedException) {
         return handleBusinessException(new BusinessException(unexpectedErrorCode, unexpectedException));
     }
 }

@@ -2,7 +2,9 @@ package zxf.springboot.service.a;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
+@ImportResource("classpath:spring-security.xml")
 @SpringBootApplication(scanBasePackages = "zxf.springboot")
 public class Application {
     public static void main(String[] args) {

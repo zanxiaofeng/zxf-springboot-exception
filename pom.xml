@@ -20,6 +20,7 @@
         <module>common</module>
         <module>service-a</module>
         <module>service-b</module>
+        <module>service-a-feign</module>
     </modules>
 
     <properties>

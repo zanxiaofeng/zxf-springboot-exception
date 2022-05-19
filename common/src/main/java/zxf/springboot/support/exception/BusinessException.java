@@ -1,19 +1,19 @@
 package zxf.springboot.support.exception;
 
 public class BusinessException extends RuntimeException {
-    private final ErrorCode errorCode;
+    private final BusinessError error;
 
-    public BusinessException(ErrorCode errorCode) {
-        super(errorCode.getExceptionMessage());
-        this.errorCode = errorCode;
+    public BusinessException(BusinessError error) {
+        super(error.exceptionMessage());
+        this.error = error;
     }
 
-    public BusinessException(ErrorCode errorCode, Throwable cause) {
-        super(errorCode.getExceptionMessage(), cause);
-        this.errorCode = errorCode;
+    public BusinessException(BusinessError error, Throwable cause) {
+        super(error.exceptionMessage(), cause);
+        this.error = error;
     }
 
-    public ErrorCode getErrorCode() {
-        return errorCode;
+    public BusinessError getErrorCode() {
+        return error;
     }
 }

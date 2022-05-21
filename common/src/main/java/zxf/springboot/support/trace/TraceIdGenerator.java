@@ -1,7 +1,9 @@
 package zxf.springboot.support.trace;
 
+import java.util.UUID;
+
 public class TraceIdGenerator {
-    public static String generateTraceId(String preffix) {
-        return String.format("%s_%s", preffix, "1232423423");
+    public static String generateTraceId(String prefix) {
+        return String.format("%s_%s", prefix, UUID.randomUUID().toString());
     }
 }

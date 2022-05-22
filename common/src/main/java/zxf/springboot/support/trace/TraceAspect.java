@@ -19,15 +19,16 @@ public class TraceAspect {
 
     @Around("execution(public * zxf.springboot.service.*.rest..*Controller.*(..))")
     public Object aroundNewRequest(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info("===> New request {}, Parameters : {}", getSignature(joinPoint), Arrays.toString(joinPoint.getArgs()));
         long start = System.currentTimeMillis();
 
         try {
             MDC.put(TRACE_ID, TraceIdGenerator.generateTraceId(WEB_REQUEST));
+            log.info("===> New request {}, Parameters : {}", getSignature(joinPoint), Arrays.toString(joinPoint.getArgs()));
             return joinPoint.proceed();
         } finally {
             long end = System.currentTimeMillis();
             log.info("<=== End request {} in {}", getSignature(joinPoint), getTime(end - start));
+            MDC.clear();
         }
     }
 

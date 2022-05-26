@@ -10,8 +10,6 @@ import zxf.springboot.support.exception.BusinessException;
 import zxf.springboot.support.feign.ClientResponse;
 
 @Data
-@Configuration
-@ConfigurationProperties(prefix = "service-a")
 public class ServiceAProperties {
     private String username;
     private String password;

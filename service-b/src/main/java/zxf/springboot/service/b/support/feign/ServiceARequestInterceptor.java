@@ -10,8 +10,8 @@ import zxf.springboot.support.Spring.ApplicationContextProvider;
 public class ServiceARequestInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate template) {
-        ServiceAProperties serviceAProperties = ApplicationContextProvider.getApplicationContext()
-                .getBean(ServiceAProperties.class);
+        ServiceAProperties serviceAProperties = (ServiceAProperties) ApplicationContextProvider.getApplicationContext()
+                .getBean("service-a");
         BasicAuthRequestInterceptor basicAuthRequestInterceptor = new BasicAuthRequestInterceptor(serviceAProperties.getUsername(),
                 serviceAProperties.getPassword());
         basicAuthRequestInterceptor.apply(template);

@@ -6,18 +6,26 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import zxf.springboot.support.exception.BusinessException;
+import zxf.springboot.support.feign.ClientResponse;
 
 @Slf4j
 @Aspect
 @Component
-public class ServiceAExceptionAspect {
+public class ServiceAClientAspect {
     @Autowired
-    private IServiceAExceptionHandler serviceAExceptionHandler;
+    private IServiceAErrorHandler serviceAExceptionHandler;
 
     @Around("execution(public * zxf.springboot.service.a.feign.ServiceAClient.*(..))")
     public Object httpRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-            return joinPoint.proceed();
+            ClientResponse response = (ClientResponse) joinPoint.proceed();
+            if (!response.isSuccess()) {
+                serviceAExceptionHandler.handleErrorResponse(response);
+            }
+            return response;
+        } catch (BusinessException businessException) {
+            throw businessException;
         } catch (Exception ex) {
             serviceAExceptionHandler.handleException(ex);
         }

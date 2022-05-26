@@ -7,13 +7,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import zxf.springboot.service.a.feign.model.CreateUserRequest;
 import zxf.springboot.service.a.feign.model.CreateUserResponse;
+import zxf.springboot.service.a.feign.model.DeferResponse;
 import zxf.springboot.service.a.feign.model.FindUserByIdResponse;
 
 @FeignClient(value = "service-a", url = "${service-a.url}")
 public interface ServiceAClient {
     @PostMapping("/users")
-    CreateUserResponse create(@RequestBody CreateUserRequest request);
+    CreateUserResponse createUser(@RequestBody CreateUserRequest request);
 
     @GetMapping("/users/{userId}")
-    FindUserByIdResponse findById(@PathVariable String userId);
+    FindUserByIdResponse findUserById(@PathVariable String userId);
+
+    @GetMapping("/defers/success")
+    DeferResponse successDefer();
+
+    @GetMapping("/defers/timeout")
+    DeferResponse timeoutDefer();
+
+    @GetMapping("/defers/error")
+    DeferResponse errorDefer();
 }

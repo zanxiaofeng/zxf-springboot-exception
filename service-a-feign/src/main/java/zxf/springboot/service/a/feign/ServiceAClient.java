@@ -1,10 +1,7 @@
 package zxf.springboot.service.a.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import zxf.springboot.service.a.feign.model.CreateUserRequest;
 import zxf.springboot.service.a.feign.model.CreateUserResponse;
 import zxf.springboot.service.a.feign.model.DeferResponse;
@@ -16,7 +13,7 @@ public interface ServiceAClient {
     CreateUserResponse createUser(@RequestBody CreateUserRequest request);
 
     @GetMapping("/users/{userId}")
-    FindUserByIdResponse findUserById(@PathVariable String userId);
+    FindUserByIdResponse findUserById(@PathVariable String userId, @RequestHeader(name = "X-AGE") Integer age);
 
     @GetMapping("/defers/success")
     DeferResponse successDefer();

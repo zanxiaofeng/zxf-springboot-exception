@@ -1,9 +1,6 @@
 package zxf.springboot.service.b.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zxf.springboot.service.b.support.exception.BErrorCodes;
 import zxf.springboot.support.exception.BusinessException;
 import zxf.springboot.support.rest.ServerResponse;

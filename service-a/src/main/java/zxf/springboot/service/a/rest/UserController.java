@@ -10,7 +10,7 @@ import zxf.springboot.support.rest.ServerResponse;
 public class UserController {
 
     @GetMapping("/{id}")
-    public ServerResponse<User> findById(@PathVariable String id) {
+    public ServerResponse<User> findById(@PathVariable String id, @RequestHeader(name = "X-AGE", required = false) Integer age) {
 
         if ("1".equals(id)) {
             throw new BusinessException(AErrorCodes.A_BUS_ERR_001.newDescription("Can not find a user with Id " + id));
@@ -18,6 +18,6 @@ public class UserController {
         if ("2".equals(id)) {
             throw new RuntimeException("unkown error");
         }
-        return ServerResponse.success(new User("3", "Davis"));
+        return ServerResponse.success(new User("3", "Davis", age));
     }
 }

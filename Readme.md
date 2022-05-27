@@ -4,7 +4,7 @@
 - By Request　利用@RequestHeader("X-Temp-Parameter-abc") 或　＠RequestParameter("x-temp-parameter-abc")
 
 # 如何获取ApplicationContext
-- 通过@Autowired注入到Bean（属性，方法，构造期）
+- 通过@Autowired注入到Bean（属性，方法，构造器）
 - 通过ApplicationContextAware注入到Bean
 - 通过静态方法ContextLoader.getCurrentWebApplicationContext()直接获取
 

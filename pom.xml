@@ -21,6 +21,7 @@
         <module>service-a</module>
         <module>service-b</module>
         <module>service-a-feign</module>
+        <module>checking</module>
     </modules>
 
     <properties>

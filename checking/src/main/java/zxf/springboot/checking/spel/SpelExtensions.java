@@ -3,20 +3,20 @@ package zxf.springboot.checking.spel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import zxf.springboot.checking.security.SecurityUtils;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 public class SpelExtensions {
     public static Boolean isAdmin() {
-        Boolean result = true;
+        Boolean result = SecurityUtils.isAdminOfCurrentUser();
         log.info("isAdmin(), {}", result);
         return result;
     }
 
     public static Boolean hasRight(String right) {
-        Boolean result = myRights().contains(right);
+        Boolean result = SecurityUtils.rightsOfCurrentUser().contains(right);
         log.info("hasRight({}), {}", right, result);
         return result;
     }
@@ -35,10 +35,6 @@ public class SpelExtensions {
         Boolean result = new SpelExpressionParser().parseExpression(express).getValue(context, Boolean.class);
         log.info("evaluate({}), {}", express, result);
         return result;
-    }
-
-    private static List<String> myRights() {
-        return Arrays.asList("1", "2", "3", "4", "5");
     }
 
     public static void main(String[] args) throws Exception {

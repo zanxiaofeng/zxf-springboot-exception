@@ -15,7 +15,9 @@ public class UserRightCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         UserRightCheck userRightCheck = getUserRightCheck(handler);
-        checkUserRight(userRightCheck);
+        if (userRightCheck != null) {
+            checkUserRight(userRightCheck);
+        }
         return true;
     }
 

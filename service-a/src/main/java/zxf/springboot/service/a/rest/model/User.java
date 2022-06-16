@@ -1,4 +1,4 @@
-package zxf.springboot.service.a.rest;
+package zxf.springboot.service.a.rest.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

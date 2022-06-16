@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class User {
     private final String id;
     private final String name;
+    private final Integer age;
 }

@@ -13,18 +13,18 @@ import zxf.springboot.checking.interceptor.UserRightCheckInterceptor;
 @Slf4j
 @Configuration
 @ComponentScan("zxf.springboot.checking")
-@ConditionalOnProperty(prefix = "zxf", name = "checking.url")
+@ConditionalOnProperty(prefix = "zxf", name = "checking.enable", havingValue = "true")
 public class AutoConfigurationChecking implements WebMvcConfigurer {
-    @Value("${zxf.checking.url}")
-    private String checkingUrl;
+    @Value("${zxf.checking.intercept-url}")
+    private String interceptUrl;
 
     @Autowired
     private UserRightCheckInterceptor userRightCheckInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("addInterceptors, {}", checkingUrl);
+        log.info("addInterceptors for url pattern {}", interceptUrl);
         registry.addInterceptor(userRightCheckInterceptor)
-                .addPathPatterns(checkingUrl);
+                .addPathPatterns(interceptUrl);
     }
 }

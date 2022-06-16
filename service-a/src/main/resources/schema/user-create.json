@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for Create a User",
+  "description": "Schema for Create a User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The id of a user"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of a user"
+    },
+    "age": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": true,
+      "description": "The age of a user"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "age"
+  ]
+}
+

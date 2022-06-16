@@ -23,6 +23,7 @@
         <module>service-a-feign</module>
         <module>checking</module>
         <module>json-schema</module>
+        <module>functional</module>
     </modules>
 
     <properties>

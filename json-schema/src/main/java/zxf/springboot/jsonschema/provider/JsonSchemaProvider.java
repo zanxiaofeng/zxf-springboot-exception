@@ -4,9 +4,10 @@ import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.springframework.util.ResourceUtils;
 import zxf.functional.core.Caching;
-import zxf.springboot.jsonschema.util.FileUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,7 +16,7 @@ public interface JsonSchemaProvider {
     Schema load(String url);
 
     static Schema fromFileProvider(String url) {
-        try (InputStream schemaInputStream = FileUtils.getInputStream(url)) {
+        try (InputStream schemaInputStream = new FileInputStream(ResourceUtils.getFile(url))) {
             JSONObject jsonSchemaObject = new JSONObject(new JSONTokener(schemaInputStream));
             return SchemaLoader.load(jsonSchemaObject);
         } catch (IOException ex) {

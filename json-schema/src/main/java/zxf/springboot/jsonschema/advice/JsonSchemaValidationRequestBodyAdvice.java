@@ -10,12 +10,13 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
 import zxf.springboot.jsonschema.annotation.JsonSchemaValidation;
 import zxf.springboot.jsonschema.provider.JsonSchemaProvider;
 
-import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -36,25 +37,24 @@ public class JsonSchemaValidationRequestBodyAdvice extends RequestBodyAdviceAdap
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
         log.info("beforeBodyRead");
+
         JsonSchemaValidation jsonSchemaValidation = parameter.getMethodAnnotation(JsonSchemaValidation.class);
         Schema jsonSchema = jsonSchemaProvider.load(jsonSchemaValidation.value());
-
-        BufferedInputStream bufferedBodyInputStream = new BufferedInputStream(inputMessage.getBody());
-        bufferedBodyInputStream.mark(1024 * 1024 * 2);
-        jsonSchema.validate(new JSONObject(new JSONTokener(bufferedBodyInputStream)));
-        bufferedBodyInputStream.reset();
-
-        return new MyHttpInputMessage(bufferedBodyInputStream, inputMessage.getHeaders());
+        try (InputStream bodyStream = inputMessage.getBody()) {
+            byte[] bodyContent = StreamUtils.copyToByteArray(bodyStream);
+            jsonSchema.validate(new JSONObject(new JSONTokener(new ByteArrayInputStream(bodyContent))));
+            return new MyHttpInputMessage(bodyContent, inputMessage.getHeaders());
+        }
     }
 
     @RequiredArgsConstructor
     public static class MyHttpInputMessage implements HttpInputMessage {
-        private final InputStream body;
+        private final byte[] bodyContent;
         private final HttpHeaders headers;
 
         @Override
         public InputStream getBody() throws IOException {
-            return body;
+            return new ByteArrayInputStream(bodyContent);
         }
 
         @Override

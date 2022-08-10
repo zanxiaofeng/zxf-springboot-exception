@@ -9,7 +9,6 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security.xsd">
-    <http pattern="/home" security="none"/>
     <http use-expressions="true">
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>

@@ -1,4 +1,4 @@
-package zxf.springboot.service.b.support.config;
+package zxf.springboot.service.b.support.feign;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

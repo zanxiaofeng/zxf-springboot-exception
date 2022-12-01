@@ -1,5 +1,7 @@
 package zxf.springboot.service.a.feign;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,21 +16,25 @@ import zxf.springboot.support.feign.ClientResponse;
 @Component
 public class ServiceAClientAspect {
     @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
     private IServiceAErrorHandler serviceAExceptionHandler;
 
     @Around("execution(public * zxf.springboot.service.a.feign.ServiceAClient.*(..))")
     public Object httpRequest(ProceedingJoinPoint joinPoint) throws Throwable {
+        ClientResponse response = null;
         try {
-            ClientResponse response = (ClientResponse) joinPoint.proceed();
-            if (!response.isSuccess()) {
-                serviceAExceptionHandler.handleErrorResponse(response);
-            }
-            return response;
-        } catch (BusinessException businessException) {
-            throw businessException;
+            response = (ClientResponse) joinPoint.proceed();
+        } catch (FeignException.InternalServerError internalServerError) {
+            response = objectMapper.readValue(internalServerError.contentUTF8(), ClientResponse.class);
         } catch (Exception ex) {
             serviceAExceptionHandler.handleException(ex);
         }
-        return null;
+
+        if (response != null && response.isSuccess()) {
+            return response;
+        }
+
+        return serviceAExceptionHandler.handleErrorResponse(response);
     }
 }

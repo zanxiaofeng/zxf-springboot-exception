@@ -10,13 +10,13 @@ import zxf.springboot.support.feign.ClientResponse;
 @Component
 public class ServiceAErrorHandler implements IServiceAErrorHandler {
     @Override
-    public void handleException(Exception ex) {
+    public void handleException(Exception ex) throws Exception {
         throw new BusinessException(BizErrorCodes.B_BIZ_ERR_002, ex);
     }
 
     @Override
     public ClientResponse handleErrorResponse(ClientResponse response) {
-        if (response.hasError(ErrorCodes.A_BIZ_ERR_001)){
+        if (response.hasError(ErrorCodes.A_BIZ_ERR_001)) {
             return response;
         }
         throw new BusinessException(BizErrorCodes.B_BIZ_ERR_002.withCause(response.getError()));

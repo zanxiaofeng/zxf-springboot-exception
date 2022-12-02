@@ -20,7 +20,9 @@
         <module>common</module>
         <module>service-a</module>
         <module>service-b</module>
+        <module>service-c</module>
         <module>service-a-feign</module>
+        <module>service-b-feign</module>
         <module>checking</module>
         <module>json-schema</module>
         <module>functional</module>

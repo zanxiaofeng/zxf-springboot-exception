@@ -6,6 +6,9 @@
             </Pattern>
         </layout>
     </appender>
+
+    <Logger name="zxf.springboot.service.c.support.retrofit.LoggingRequestInterceptor" level="DEBUG"/>
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>

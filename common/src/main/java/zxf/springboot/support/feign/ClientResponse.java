@@ -1,8 +1,6 @@
 package zxf.springboot.support.feign;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import zxf.springboot.support.exception.Error;
 
 import java.util.Optional;
@@ -23,12 +21,13 @@ public class ClientResponse<T> {
                 .orElse(false);
     }
 
-    @Getter
-    @RequiredArgsConstructor
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class APIError implements Error {
-        private final String code;
-        private final String description;
-        private final APIError cause;
+        private String code;
+        private String description;
+        private APIError cause;
 
         @Override
         public Error copy() {

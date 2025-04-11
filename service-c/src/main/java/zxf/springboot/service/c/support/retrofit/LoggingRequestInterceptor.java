@@ -35,8 +35,8 @@ public class LoggingRequestInterceptor implements Interceptor {
     private void logRequest(Request request, Consumer<String> logger) {
         logger.accept("=================================================Request begin=================================================");
         logger.accept("URI             : " + request.url());
-        logger.accept("Methed          : " + request.method());
-        logger.accept("Headers         : " + removeSensitiveHeaders(request.headers()));
+        logger.accept("Method          : " + request.method());
+        logger.accept("Headers         : \n" + removeSensitiveHeaders(request.headers()));
         logger.accept("Request Body    : " + request.body());
         logger.accept("=================================================Request end=================================================");
     }
@@ -44,7 +44,7 @@ public class LoggingRequestInterceptor implements Interceptor {
     private void logResponse(Response response, Consumer<String> logger) throws IOException {
         logger.accept("=================================================Response begin=================================================");
         logger.accept("Status code     : " + response.code());
-        logger.accept("Headers         : " + response.headers());
+        logger.accept("Headers         : \n" + response.headers());
         logger.accept("Response Body   : " + response.body());
         logger.accept("=================================================Response end=================================================");
     }

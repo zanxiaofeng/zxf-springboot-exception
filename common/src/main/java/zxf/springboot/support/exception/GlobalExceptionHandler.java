@@ -1,7 +1,6 @@
 package zxf.springboot.support.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.everit.json.schema.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,8 +33,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.ok().body(ServerResponse.error(errorCode.copy()));
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<ServerResponse> handleValidationException(ValidationException validationException) {
+    @ExceptionHandler(org.everit.json.schema.ValidationException.class)
+    public ResponseEntity<ServerResponse> handleValidationException(org.everit.json.schema.ValidationException validationException) {
         return handleBadRequestException(new BadRequestException(validationException));
     }
 
